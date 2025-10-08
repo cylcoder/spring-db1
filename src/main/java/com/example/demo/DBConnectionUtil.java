@@ -1,6 +1,8 @@
 package com.example.demo;
 
-import static com.example.demo.ConnectionConst.*;
+import static com.example.demo.ConnectionConst.PASSWORD;
+import static com.example.demo.ConnectionConst.URL;
+import static com.example.demo.ConnectionConst.USERNAME;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
