@@ -1,5 +1,6 @@
-package com.example.demo;
+package com.example.demo.repository;
 
+import com.example.demo.domain.Member;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,13 +13,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.support.JdbcUtils;
 
 /*
-* JDBC - DataSource 사용, JdbcUtils 사용
+* JDBC - ConnectionParam
 * */
 @Slf4j
 @RequiredArgsConstructor
-public class MemberRepositoryV1 {
-
-  private static final String ERROR = "ERROR";
+public class MemberRepositoryV2 {
 
   private final DataSource dataSource;
 
@@ -35,7 +34,7 @@ public class MemberRepositoryV1 {
       pstmt.executeUpdate();
       return member;
     } catch (SQLException e) {
-      log.error(ERROR, e);
+      log.error("ERROR", e);
       throw e;
     } finally {
       close(con, pstmt, null);
@@ -63,10 +62,38 @@ public class MemberRepositoryV1 {
         throw new NoSuchElementException("member not found (memberId = %s)".formatted(memberId));
       }
     } catch (SQLException e) {
-      log.error(ERROR, e);
+      log.error("ERROR", e);
       throw e;
     } finally {
       close(con, pstmt, rs);
+    }
+  }
+
+  public Member findById(Connection con, String memberId) throws SQLException {
+    String sql = "SELECT * FROM member where member_id = ?";
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+
+    try {
+      pstmt = con.prepareStatement(sql);
+      pstmt.setString(1, memberId);
+
+      rs = pstmt.executeQuery();
+      if (rs.next()) {
+        Member member = new Member();
+        member.setMemberId(rs.getString("member_id"));
+        member.setMoney(rs.getInt("money"));
+        return member;
+      } else {
+        throw new NoSuchElementException("member not found (memberId = %s)".formatted(memberId));
+      }
+    } catch (SQLException e) {
+      log.error("ERROR", e);
+      throw e;
+    } finally {
+      // connection은 여기서 닫지 않는다.
+      JdbcUtils.closeResultSet(rs);
+      JdbcUtils.closeStatement(pstmt);
     }
   }
 
@@ -82,9 +109,26 @@ public class MemberRepositoryV1 {
       pstmt.setString(2, memberId);
       pstmt.executeUpdate();
     } catch (SQLException e) {
-      log.error(ERROR, e);
+      log.error("ERROR", e);
     } finally {
       close(con, pstmt, null);
+    }
+  }
+
+  public void update(Connection con, String memberId, int money) {
+    String sql = "UPDATE member SET money = ? WHERE member_id = ?";
+    PreparedStatement pstmt = null;
+
+    try {
+      pstmt = con.prepareStatement(sql);
+      pstmt.setInt(1, money);
+      pstmt.setString(2, memberId);
+      pstmt.executeUpdate();
+    } catch (SQLException e) {
+      log.error("ERROR", e);
+    } finally {
+      // connection은 여기서 닫지 않는다.
+      JdbcUtils.closeStatement(pstmt);
     }
   }
 
@@ -99,7 +143,23 @@ public class MemberRepositoryV1 {
       pstmt.setString(1, memberId);
       pstmt.executeUpdate();
     } catch (SQLException e) {
-      log.error(ERROR, e);
+      log.error("ERROR", e);
+    } finally {
+      close(con, pstmt, null);
+    }
+  }
+
+  public void deleteAll() {
+    String sql = "DELETE FROM member";
+    Connection con = null;
+    PreparedStatement pstmt = null;
+
+    try {
+      con = getConnection();
+      pstmt = con.prepareStatement(sql);
+      pstmt.executeUpdate();
+    } catch (SQLException e) {
+      log.error("ERROR", e);
     } finally {
       close(con, pstmt, null);
     }

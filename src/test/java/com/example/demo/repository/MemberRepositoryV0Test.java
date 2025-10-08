@@ -1,8 +1,9 @@
-package com.example.demo;
+package com.example.demo.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import com.example.demo.domain.Member;
 import java.sql.SQLException;
 import java.util.NoSuchElementException;
 import lombok.extern.slf4j.Slf4j;

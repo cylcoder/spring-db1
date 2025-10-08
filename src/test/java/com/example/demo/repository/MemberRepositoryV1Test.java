@@ -1,16 +1,14 @@
-package com.example.demo;
+package com.example.demo.repository;
 
-import static com.example.demo.ConnectionConst.*;
+import static com.example.demo.connection.ConnectionConst.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import com.example.demo.domain.Member;
 import com.zaxxer.hikari.HikariDataSource;
-import java.sql.SQLException;
-import java.util.NoSuchElementException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 @Slf4j
 class MemberRepositoryV1Test {

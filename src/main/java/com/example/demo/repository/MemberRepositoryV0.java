@@ -1,7 +1,8 @@
-package com.example.demo;
+package com.example.demo.repository;
 
-import static com.example.demo.DBConnectionUtil.getConnection;
+import static com.example.demo.connection.DBConnectionUtil.getConnection;
 
+import com.example.demo.domain.Member;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,8 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MemberRepositoryV0 {
 
-  private static final String ERROR = "ERROR";
-
   public Member save(Member member) throws SQLException {
     String sql = "INSERT INTO member (member_id, money) values (?, ?)";
     Connection con = null;
@@ -31,7 +30,7 @@ public class MemberRepositoryV0 {
       pstmt.executeUpdate();
       return member;
     } catch (SQLException e) {
-      log.error(ERROR, e);
+      log.error("ERROR", e);
       throw e;
     } finally {
       close(con, pstmt, null);
@@ -59,7 +58,7 @@ public class MemberRepositoryV0 {
         throw new NoSuchElementException("member not found (memberId = %s)".formatted(memberId));
       }
     } catch (SQLException e) {
-      log.error(ERROR, e);
+      log.error("ERROR", e);
       throw e;
     } finally {
       close(con, pstmt, rs);
@@ -78,7 +77,7 @@ public class MemberRepositoryV0 {
       pstmt.setString(2, memberId);
       pstmt.executeUpdate();
     } catch (SQLException e) {
-      log.error(ERROR, e);
+      log.error("ERROR", e);
     } finally {
       close(con, pstmt, null);
     }
@@ -95,7 +94,7 @@ public class MemberRepositoryV0 {
       pstmt.setString(1, memberId);
       pstmt.executeUpdate();
     } catch (SQLException e) {
-      log.error(ERROR, e);
+      log.error("ERROR", e);
     } finally {
       close(con, pstmt, null);
     }
@@ -106,7 +105,7 @@ public class MemberRepositoryV0 {
       try {
         rs.close();
       } catch (SQLException e) {
-        log.info(ERROR, e);
+        log.info("ERROR", e);
       }
     }
 
@@ -114,7 +113,7 @@ public class MemberRepositoryV0 {
       try {
         stmt.close();
       } catch (SQLException e) {
-        log.info(ERROR, e);
+        log.info("ERROR", e);
       }
     }
 
@@ -122,7 +121,7 @@ public class MemberRepositoryV0 {
       try {
         con.close();
       } catch(SQLException e) {
-        log.info(ERROR, e);
+        log.info("ERROR", e);
       }
     }
   }

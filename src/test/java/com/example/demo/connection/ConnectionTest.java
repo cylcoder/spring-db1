@@ -1,8 +1,8 @@
-package com.example.demo;
+package com.example.demo.connection;
 
-import static com.example.demo.ConnectionConst.PASSWORD;
-import static com.example.demo.ConnectionConst.URL;
-import static com.example.demo.ConnectionConst.USERNAME;
+import static com.example.demo.connection.ConnectionConst.PASSWORD;
+import static com.example.demo.connection.ConnectionConst.URL;
+import static com.example.demo.connection.ConnectionConst.USERNAME;
 
 import com.zaxxer.hikari.HikariDataSource;
 import java.sql.Connection;
