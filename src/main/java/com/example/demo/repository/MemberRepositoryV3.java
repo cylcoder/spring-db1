@@ -10,17 +10,18 @@ import java.util.NoSuchElementException;
 import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.jdbc.support.JdbcUtils;
 
 /*
-* JDBC - DataSource 사용, JdbcUtils 사용
-* 구현체인 DriverManager로 커넥션을 얻던 방식을 추상화된 인터페이스인 DataSource에 의존하도록 수정
-* 실제 구현체는 Configuration 클래스에서 설정
-* 그리고 JdbcUtils를 이용해서 편리하게 리소스를 close
+* 트랜잭션 - 트랜잭션 매니저
+* DataSourceUtils.getConnection()
+* DataSourceUtils.releaseConnection()
+* 커넥션을 매번 파라미터로 전달 -> DataSourceUtils를 통한 동일한 커넥션 획득
 * */
 @Slf4j
 @RequiredArgsConstructor
-public class MemberRepositoryV1 {
+public class MemberRepositoryV3 {
 
   private final DataSource dataSource;
 
@@ -123,14 +124,18 @@ public class MemberRepositoryV1 {
     }
   }
 
-  private Connection getConnection() throws SQLException {
-    return dataSource.getConnection();
+  private Connection getConnection() {
+    // 주의! 트랜잭션 동기화를 사용하려면 DataSourceUtils를 사용해야 한다.
+    // ConnectionHolder conHolder = (ConnectionHolder) TransactionSynchronizationManager.getResource(dataSource);
+    // getConnection() 내부를 보면 위와 같이 트랜잭션 동기화 매니저로부터 커넥션을 얻는다.
+    return DataSourceUtils.getConnection(dataSource);
   }
 
   private void close(Connection con, Statement stmt, ResultSet rs) {
     JdbcUtils.closeResultSet(rs);
     JdbcUtils.closeStatement(stmt);
-    JdbcUtils.closeConnection(con);
+    // 주의! 트랜잭션 동기화를 사용하려면 DataSourceUtils를 사용해야 한다.
+    DataSourceUtils.releaseConnection(con, dataSource);
   }
 
 }

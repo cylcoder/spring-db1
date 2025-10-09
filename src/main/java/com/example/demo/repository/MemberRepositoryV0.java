@@ -1,9 +1,12 @@
 package com.example.demo.repository;
 
-import static com.example.demo.connection.DBConnectionUtil.getConnection;
+import static com.example.demo.connection.ConnectionConst.PASSWORD;
+import static com.example.demo.connection.ConnectionConst.URL;
+import static com.example.demo.connection.ConnectionConst.USERNAME;
 
 import com.example.demo.domain.Member;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -98,6 +101,10 @@ public class MemberRepositoryV0 {
     } finally {
       close(con, pstmt, null);
     }
+  }
+
+  private Connection getConnection() throws SQLException {
+    return DriverManager.getConnection(URL, USERNAME, PASSWORD);
   }
 
   private void close(Connection con, Statement stmt, ResultSet rs) {

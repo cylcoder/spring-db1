@@ -11,6 +11,9 @@ import org.springframework.jdbc.support.JdbcUtils;
 
 /*
 * 트랜잭션 - 파라미터 연동, 풀을 고려한 종료
+* 한계
+* - 트랜잭션 관리 코드가 비즈니스 로직 코드와 섞임
+* - 커넥션을 매번 넘겨야함
 * */
 @Slf4j
 @RequiredArgsConstructor

@@ -14,6 +14,8 @@ import org.springframework.jdbc.support.JdbcUtils;
 
 /*
 * JDBC - ConnectionParam
+* 트랜잭션 처리를 위해 커넥션이 공유되어야 함
+* 서비스 레이어에서 커넥션을 들고 있다가 인자로 전달해서 동일한 커넥션을 사용
 * */
 @Slf4j
 @RequiredArgsConstructor
@@ -68,7 +70,7 @@ public class MemberRepositoryV2 {
       close(con, pstmt, rs);
     }
   }
-
+  
   public Member findById(Connection con, String memberId) throws SQLException {
     String sql = "SELECT * FROM member where member_id = ?";
     PreparedStatement pstmt = null;
