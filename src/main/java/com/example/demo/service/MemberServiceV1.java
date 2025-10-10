@@ -4,7 +4,10 @@ import com.example.demo.domain.Member;
 import com.example.demo.repository.MemberRepositoryV1;
 import lombok.RequiredArgsConstructor;
 
-// Happy Path만 고려한 코드
+/*
+* Happy Path만 고려한 코드
+* 트랜잭션 처리가 안되어있음
+* */
 @RequiredArgsConstructor
 public class MemberServiceV1 {
 

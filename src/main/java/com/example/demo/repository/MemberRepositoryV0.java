@@ -16,6 +16,8 @@ import lombok.extern.slf4j.Slf4j;
 
 /*
 * JDBC - DriverManager 사용
+* 매 요청마다 새로운 커넥션을 직접 생성하고 닫음
+* 트랜잭션 처리를 위한 커넥션 공유가 불가능함
 * */
 @Slf4j
 public class MemberRepositoryV0 {

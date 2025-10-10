@@ -17,7 +17,7 @@ import org.springframework.jdbc.support.JdbcUtils;
 * 트랜잭션 - 트랜잭션 매니저
 * DataSourceUtils.getConnection()
 * DataSourceUtils.releaseConnection()
-* 커넥션을 매번 파라미터로 전달 -> DataSourceUtils를 통한 동일한 커넥션 획득
+* DataSourceUtils를 통한 동일한 커넥션 획득 -> 더이상 파라미터로 전달받지 않아도 됨
 * */
 @Slf4j
 @RequiredArgsConstructor

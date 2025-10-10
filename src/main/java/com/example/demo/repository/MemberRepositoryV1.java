@@ -15,8 +15,9 @@ import org.springframework.jdbc.support.JdbcUtils;
 /*
 * JDBC - DataSource 사용, JdbcUtils 사용
 * 구현체인 DriverManager로 커넥션을 얻던 방식을 추상화된 인터페이스인 DataSource에 의존하도록 수정
-* 실제 구현체는 Configuration 클래스에서 설정
-* 그리고 JdbcUtils를 이용해서 편리하게 리소스를 close
+* 실제 구현체는 Configuration 클래스에서 설정 -> Hikari CP로 주입
+* JdbcUtils를 이용해서 커넥션 닫음
+* 트랜잭션 처리를 위한 커넥션 공유가 불가능함
 * */
 @Slf4j
 @RequiredArgsConstructor

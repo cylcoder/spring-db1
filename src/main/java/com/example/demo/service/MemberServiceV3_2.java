@@ -8,7 +8,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 /*
 * 트랜잭션 - 트랜잭션 템플릿
-* 중복되는 try-catch-finally문을 TransactionTemplate으로 제거
+* 트랜잭션 템플릿으로 트랜잭션 시작, 커밋, 롤백의 코드를 제거
 * */
 @Slf4j
 public class MemberServiceV3_2 {

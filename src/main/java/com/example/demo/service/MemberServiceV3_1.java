@@ -2,7 +2,6 @@ package com.example.demo.service;
 
 import com.example.demo.domain.Member;
 import com.example.demo.repository.MemberRepositoryV3;
-import java.sql.Connection;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -11,7 +10,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 /*
 * 트랜잭션 - 트랜잭션 매니저
-* 트랜잭션 처리 코드가 비즈니스 로직 코드와 섞이는 문제를 해결
+* 트랜잭션 매니저를 통해 더이상 파라미터가 없이도 동일한 커넥션을 사용
 * */
 @Slf4j
 @RequiredArgsConstructor

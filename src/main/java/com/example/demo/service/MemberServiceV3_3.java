@@ -8,7 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 /*
 * 트랜잭션 - @Transactional AOP
-* 여전히 남아있던 트랜잭션 관련 코드를 트랜잭션 AOP로 없앰
+* @Transactional로 txTemplate.executeWithoutResult(status -> {});
+* 형태로 여전히 남은 트랜잭션 관련 코드를 제거
 * */
 @Slf4j
 @RequiredArgsConstructor

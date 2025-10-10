@@ -1,19 +1,16 @@
 package com.example.demo.service;
 
 import com.example.demo.domain.Member;
-import com.example.demo.repository.MemberRepositoryV1;
 import com.example.demo.repository.MemberRepositoryV2;
 import java.sql.Connection;
 import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.jdbc.support.JdbcUtils;
 
 /*
 * 트랜잭션 - 파라미터 연동, 풀을 고려한 종료
-* 한계
-* - 트랜잭션 관리 코드가 비즈니스 로직 코드와 섞임
-* - 커넥션을 매번 넘겨야함
+* 트랜잭션 처리를 하려면 커넥션을 공유해야 함
+* 커넥션을 파라미터로 전달받아 동일한 커넥션을 통해 트랜잭션 처리
 * */
 @Slf4j
 @RequiredArgsConstructor
